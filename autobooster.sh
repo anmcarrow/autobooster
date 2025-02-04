@@ -1,21 +1,40 @@
 #!/bin/bash
 
 PIDFILE="/var/run/my_service.pid"
+INIFILE="${1:-/etc/autobooster.ini}"
 LOAD_THRESHOLD="$(($(nproc) * 1,5))"
 CHECK_TIMEOUT=60
-# DATE=$(date +"%Y-%m-%d %H:%M:%S")
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 CYAN='\033[0;36m'
-# YELLOW='\033[1;33m'
 NC='\033[0m'
 
+source_config(){
+    if [ -f "${INIFILE}" ] 
+    then
+        # shellcheck disable=SC1090
+        source "${INIFILE}"
+        echo -e "${CYAN}$(date +"%Y-%m-%d %H:%M:%S")  External configuration loaded, going further...${NC}"
+    fi
+}
+
+check_boost(){
+    echo -e "${CYAN}$(date +"%Y-%m-%d %H:%M:%S")  Checking Turbo Boost drivers...${NC}"
+
+    if [ -f /sys/devices/system/cpu/intel_pstate/no_turbo ] 
+    then
+        echo -e "${CYAN}$(date +"%Y-%m-%d %H:%M:%S")  The drivers is in place, going further...${NC}"
+    else
+        echo -e "${CYAN}$(date +"%Y-%m-%d %H:%M:%S")  The there no appropriate drivers, exiting...${NC}"
+        exit 1
+    fi
+}
 
 turbo_booster(){
 
 echo $! > "$PIDFILE"
-echo -e "${CYAN}$(date +"%Y-%m-%d %H:%M:%S")  AutoBooster started with PID $(cat $PIDFILE)${NC}"
+echo -e "${CYAN}$(date +"%Y-%m-%d %H:%M:%S")  AutoBooster successfully started${NC}"
 echo -e "${CYAN}$(date +"%Y-%m-%d %H:%M:%S")  AVG threshold is ${LOAD_THRESHOLD}${NC}"
 
 while true ; do
@@ -33,50 +52,6 @@ while true ; do
 done
 }
 
-service_start() {
-    if [ -f "$PIDFILE" ] && kill -0 $(cat "$PIDFILE"); then
-        echo -e "Service already running"
-        exit 1
-    fi
-    echo -e "Starting TurboBooster..."
-    turbo_booster &
-    echo -e $! > "$PIDFILE"
-    echo -e "TurboBooster started with PID $(cat $PIDFILE)"
-}
-
-service_stop() {
-    if [ -f "$PIDFILE" ] && kill -0 $(cat "$PIDFILE"); then
-        echo -e "Stopping service..."
-        kill $(cat "$PIDFILE")
-        rm -f "$PIDFILE"
-        echo -e "Service stopped"
-    else
-        echo -e "Service not running"
-    fi
-}
-
-# case "$1" in
-#     start)
-#         service_start
-#         ;;
-#     stop)
-#         service_stop
-#         ;;
-#     restart)
-#         service_start
-#         service_stop
-#         ;;
-#     status)
-#         if [ -f "$PIDFILE" ] && kill -0 $(cat "$PIDFILE"); then
-#             echo -e "Service running with PID $(cat $PIDFILE)"
-#         else
-#             echo -e "Service not running"
-#         fi
-#         ;;
-#     *)
-#         echo -e "Usage: $0 {start|stop|restart|status}"
-#         exit 1
-#         ;;
-# esac
-
+check_boost
+source_config
 turbo_booster
