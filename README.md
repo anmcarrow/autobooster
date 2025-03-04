@@ -7,7 +7,7 @@ AutoBooster is developed and designed only for Linux-based OSs. It is inspired b
 ## Features
 
 - Automatic performance tuning according to predefined or configured AVG amount.
-- Easy to configure, it's just a shell script + INI=file
+- Easy to configure, it's just a shell script + INI-file
 - Lightweight and efficient
 - Compatible with various Linux systems
 
