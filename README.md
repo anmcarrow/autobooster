@@ -18,7 +18,7 @@ To install AutoBooster, clone the repository and run the installation script:
 ```bash
 git clone https://github.com/yourusername/anmcarrow.autobooster.git
 cd anmcarrow.autobooster
-./autobooster.sh
+sudo ./autobooster.sh
 ```
 
 ## Installation as a Systemd-service
@@ -28,7 +28,7 @@ To install AutoBooster, clone the repository and run the installation script:
 ```bash
 git clone https://github.com/yourusername/anmcarrow.autobooster.git
 cd anmcarrow.autobooster
-./install.sh
+sudo ./install.sh
 ```
 
 ## Usage as a service
