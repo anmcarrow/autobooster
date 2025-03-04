@@ -2,7 +2,7 @@ Hello there. AutoBooster is a simple tool (theat can be installed as as Systemd-
 automatically, in dependency of AVG load, enable and disable ["turbo" mode](https://www.intel.com/content/www/us/en/gaming/resources/turbo-boost.html) for Intel CPUs. 
 
 AutoBooster is developed and designed only for Linux-based OSs. It is inspired by the [BoostChanger](https://github.com/nbebaw/boostchanger) and
-[Boos Manager](https://github.com/kubadlo/intel-turboproject) projects but aims to provide a simpler (because of KIS), and more portable experience.
+[Boost Manager](https://github.com/kubadlo/intel-turboproject) projects but aims to provide a simpler (because of KIS), and more portable experience.
 
 ## Features
 
