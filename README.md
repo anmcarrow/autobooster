@@ -36,13 +36,13 @@ sudo ./install.sh
 After installation, you can start AutoBooster with the following command:
 
 ```bash
-autobooster start
+sudo systemctl start autobooster 
 ```
 
 To stop the script, use:
 
 ```bash
-autobooster stop
+sudo systemctl stop autobooster
 ```
 
 ## Configuration
