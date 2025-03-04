@@ -1,4 +1,4 @@
-Hello there. AutoBooster is a simple tool (theat can be installed as as systemd-service) designed to 
+Hello there. AutoBooster is a simple tool (theat can be installed as as Systemd-service) designed to 
 automatically, in dependency of AVG load, enable and disable ["turbo" mode](https://www.intel.com/content/www/us/en/gaming/resources/turbo-boost.html) for Intel CPUs. 
 
 AutoBooster is developed and designed only for Linux-based OSs. It is inspired by the [BoostChanger](https://github.com/nbebaw/boostchanger) and
@@ -21,7 +21,7 @@ cd anmcarrow.autobooster
 ./autobooster.sh
 ```
 
-## Installation as a service
+## Installation as a Systemd-service
 
 To install AutoBooster, clone the repository and run the installation script:
 
