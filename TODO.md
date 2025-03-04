@@ -1,0 +1,2 @@
+- Add the separate file-based logging
+- Add the logrontate profile for service logs
