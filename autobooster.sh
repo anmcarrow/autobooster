@@ -2,8 +2,10 @@
 
 PIDFILE="/var/run/my_service.pid"
 INIFILE="${1:-/etc/autobooster.ini}"
+LOGFILE=/var/log/autobooster.log
 LOAD_THRESHOLD="$(($(nproc) * 1,5))"
 CHECK_TIMEOUT=60
+
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -38,8 +40,8 @@ echo -e "${CYAN}$(date +"%Y-%m-%d %H:%M:%S")  AutoBooster successfully started${
 echo -e "${CYAN}$(date +"%Y-%m-%d %H:%M:%S")  AVG threshold is ${LOAD_THRESHOLD}${NC}"
 
 while true ; do
-   LOAD=$(uptime | awk -F'load average:' '{ print $2 }' | cut -d, -f3 | xargs)
-   LOAD_INT=$(echo -e $LOAD | awk '{print int($1+0.5)}')
+   LOAD="$(uptime | awk -F'load average:' '{ print $2 }' | cut -d, -f3 | xargs)"
+   LOAD_INT="$(echo -e "$LOAD" | awk '{print int($1+0.5)}')"
 
    if [ "${LOAD_INT}" -gt "${LOAD_THRESHOLD}" ]; then
      echo -e "${RED}$(date +"%Y-%m-%d %H:%M:%S")  AVG5 is ${LOAD_INT}/${LOAD_THRESHOLD}. Let it boost...${NC}"
@@ -52,6 +54,6 @@ while true ; do
 done
 }
 
-check_boost
-source_config
-turbo_booster
+check_boost | tee -a "${LOGFILE}" 2>&1
+source_config | tee -a "${LOGFILE}" 2>&1
+turbo_booster | tee -a "${LOGFILE}" 2>&1
